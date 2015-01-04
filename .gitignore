@@ -1,3 +1,4 @@
 bin/
 model*
 test*
+.DS_Store
