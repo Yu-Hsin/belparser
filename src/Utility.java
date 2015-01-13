@@ -58,7 +58,7 @@ public class Utility {
     }
     
     public static String abundance (String argWrd) {
-	return "abundacne of " + parseFunc(argWrd);
+	return "abundance of " + parseFunc(argWrd);
     }
     
     public static String geneAbun (String argWrd) {
@@ -73,6 +73,14 @@ public class Utility {
 	return "RNA abundacne of " + parseFunc(argWrd);
     }
     
+    public static String path (String argWrd) {
+	return "pathology process of " + argWrd;
+    }
+    
+    public static String biopro (String argWrd) {
+	return "biological process of " + argWrd;
+    }
+    
     public static String variant (String argWrd) { //incomplete TODO
 	return "variant" + " " + argWrd.substring(argWrd.indexOf(".") + 1);
     }
@@ -82,17 +90,24 @@ public class Utility {
 	if (strArr.length == 1) {
 	    return "with unspecified " + typeMap.get(strArr[0]);
 	} else if (strArr.length == 2) {
-	    return "with " + typeMap.get(strArr[0].trim()) + " at an unspecified " + codeMap.get(strArr[1].trim());  
+	    String type = typeMap.get(strArr[0].trim()) == null? typeMap.get(strArr[1].trim()) : typeMap.get(strArr[0].trim());
+	    if (typeMap.get(strArr[0].trim()) == null && codeMap.get(strArr[0].trim()) == null ||  
+		typeMap.get(strArr[1].trim()) == null && codeMap.get(strArr[1].trim()) == null) {
+		return typeMap.get(strArr[0].trim()) == null ? "with " + type + " at " + strArr[0].trim() : "with " + type + " at " + strArr[1].trim();
+	    } else {
+		return "with " + type + " at an unspecified " + codeMap.get(strArr[1].trim());
+	    }
 	} else {
 	    return "with " + typeMap.get(strArr[0].trim()) + " at " + codeMap.get(strArr[1].trim()) + " " + strArr[2].trim();
 	}
     }
     
     public static String complex (String argWrd) { //might incur some bugs if there are some unexpected commas
+	
 	String [] strArr = argWrd.split(",");
 	String ans = "complex of (";
 	for (int i = 0; i < strArr.length; i++) {
-	    ans += parseFunc(strArr[0]) + ", ";
+	    ans += parseFunc(strArr[i].trim()) + ", ";
 	}
 	ans = ans.substring(0, ans.length() - 2);
 	ans += ")";
@@ -131,6 +146,15 @@ public class Utility {
 	else 
 	    return "ERROR!";
     }
+    
+    public static String tloc (String argWrd) {
+	String [] strArr = argWrd.split(",");
+	if (strArr.length != 3) System.err.println ("ERROR in tloc");
+	String str1 = strArr[1].trim().length() == 0? "unknown place" : strArr[1].trim();
+	String str2 = strArr[2].trim().length() == 0? "unknown place" : strArr[2].trim();
+	return parseFunc(strArr[0]) + " translocates from " + str1 + " to " + str2;
+    }
+    
     /*
      * 
      * 
@@ -165,6 +189,12 @@ public class Utility {
 	    transWrd = microRNA(argWrd);
 	} else if (funWrd.equals("r") || funWrd.equals("rnaAbundance")) {
 	    transWrd = rnaAbun(argWrd);
+	} else if (funWrd.equals("path") || funWrd.equals("pathology")) {
+	    transWrd = path (argWrd);
+	} else if (funWrd.equals("bp") || funWrd.equals("biologicalProcess")) {
+	    transWrd = biopro (argWrd);
+	} else if (funWrd.equals("translocation") || funWrd.equals("tloc")) {
+	    transWrd = tloc (argWrd);
 	}
 	
 	return transWrd;

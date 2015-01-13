@@ -24,8 +24,8 @@ public class ParseBEL {
 		" increases ", "->",
 		" directlyIncreases ", "=>", 
 		" causesNoChange ", "cnc", 
-		"regulates", "reg", 
-		"rateLimitingStepOf"));
+		" regulates ", " reg ", 
+		" rateLimitingStepOf "));
 	initRelMap();
     }
 
@@ -59,16 +59,23 @@ public class ParseBEL {
 		}
 		line = removeComment(line);
 		if (isRelation(line)) { //is a relation statement 
-		    System.out.println(line);
+		    System.out.println("Original statement: " + line);
 		    String left = Utility.parseFunc(arguments[0]);
 		    String right = Utility.parseFunc(arguments[1]);
 		    transResults[0] = left;
 		    transResults[2] = right;
+		    System.out.println("Translation result:");// + left + " " + transResults[1] + " " + right);
 		    System.out.println(left);
 		    System.out.println(transResults[1]);
 		    System.out.println(right);
 		    System.out.println("=================");
-		}
+		} else if (isComplex(line) || line.contains("tloc") || line.contains("translocation")) {
+		    String out = Utility.parseFunc(line);
+		    System.out.println("Original statement: " + line);
+		    System.out.println("Transaltion result: ");// + out);
+		    System.out.println(out);
+		    System.out.println("=================");
+		} 
 	    }
 
 	    br.close();
@@ -78,7 +85,11 @@ public class ParseBEL {
 	    e.printStackTrace();
 	}
     }
-
+    public boolean isComplex(String line) {
+	
+	return line.contains("complex");
+    }
+    
     public boolean isRelation(String line) {
 	for (String entryStr : relationKeyWord) {
 	    if (line.contains(entryStr)) {
