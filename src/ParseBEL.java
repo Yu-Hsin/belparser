@@ -10,13 +10,28 @@ import java.util.Set;
 
 
 
+/** 
+ * @author Yu-Hsin Kuo
+ * Language Technologies Institutes, 
+ * Carnegie Mellon Univeristy
+ * 
+ * This is a translator that translate a BEL models to text form. 
+ * We mostly follow the functions defined in V2.0.
+ */
+
 public class ParseBEL {
+    
+    
+    
+    
     Set<String> relationKeyWord;
     Map <String, String> relmap; //relation mapping
     String [] arguments;
     String [] transResults;
 
     public ParseBEL() {
+	Utility u = new Utility();
+	u.configFunMap();
 	arguments = new String[2];
 	transResults = new String [3];
 	relmap = new HashMap <String, String> ();
@@ -68,7 +83,7 @@ public class ParseBEL {
 		    transResults[2] = right;
 		    //System.out.println(line);
 //		    System.out.println("Translation result:");// + left + " " + transResults[1] + " " + right);
-//		    System.out.println(left);
+		    System.out.println(left);
 		    System.out.println(transResults[2]);
 //		    System.out.println(right);
 //		    System.out.println(left + " " + transResults[1] + " " + right);
