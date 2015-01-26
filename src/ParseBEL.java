@@ -8,6 +8,8 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+
+
 public class ParseBEL {
     Set<String> relationKeyWord;
     Map <String, String> relmap; //relation mapping
@@ -59,22 +61,26 @@ public class ParseBEL {
 		}
 		line = removeComment(line);
 		if (isRelation(line)) { //is a relation statement 
-		    System.out.println("Original statement: " + line);
+		    //System.out.println("Original statement: " + line);
 		    String left = Utility.parseFunc(arguments[0]);
 		    String right = Utility.parseFunc(arguments[1]);
 		    transResults[0] = left;
 		    transResults[2] = right;
-		    System.out.println("Translation result:");// + left + " " + transResults[1] + " " + right);
-		    System.out.println(left);
-		    System.out.println(transResults[1]);
-		    System.out.println(right);
-		    System.out.println("=================");
+		    //System.out.println(line);
+//		    System.out.println("Translation result:");// + left + " " + transResults[1] + " " + right);
+//		    System.out.println(left);
+		    System.out.println(transResults[2]);
+//		    System.out.println(right);
+//		    System.out.println(left + " " + transResults[1] + " " + right);
+		    //System.out.println("=================");
 		} else if (isComplex(line) || line.contains("tloc") || line.contains("translocation")) {
 		    String out = Utility.parseFunc(line);
-		    System.out.println("Original statement: " + line);
-		    System.out.println("Transaltion result: ");// + out);
-		    System.out.println(out);
-		    System.out.println("=================");
+		    //System.out.println(line);
+		    //System.out.println("Original statement: " + line);
+		    //System.out.println("Transaltion result: ");// + out);
+//		    System.out.println(out);
+		    //System.out.println("=================");
+		    
 		} 
 	    }
 

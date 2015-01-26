@@ -47,7 +47,7 @@ public class Utility {
     public static String proAbundance (String argWrd) {
 	int index = argWrd.indexOf(",");
 		
-	String tran = "abundance of the protein";
+	String tran = "protein";
 	
 	if (index <= 0) {
 	    tran += " " + argWrd;
@@ -58,7 +58,8 @@ public class Utility {
     }
     
     public static String abundance (String argWrd) {
-	return "abundance of " + parseFunc(argWrd);
+	//return "abundance of " + parseFunc(argWrd);
+	return parseFunc(argWrd);
     }
     
     public static String geneAbun (String argWrd) {
@@ -98,19 +99,20 @@ public class Utility {
 		return "with " + type + " at an unspecified " + codeMap.get(strArr[1].trim());
 	    }
 	} else {
-	    return "with " + typeMap.get(strArr[0].trim()) + " at " + codeMap.get(strArr[1].trim()) + " " + strArr[2].trim();
+	    
+	    return "with " + typeMap.get(strArr[2].trim()) + " at " + codeMap.get(strArr[1].trim()) + " " + strArr[0].trim();
 	}
     }
     
     public static String complex (String argWrd) { //might incur some bugs if there are some unexpected commas
 	
 	String [] strArr = argWrd.split(",");
-	String ans = "complex of (";
+	String ans = "(";
 	for (int i = 0; i < strArr.length; i++) {
 	    ans += parseFunc(strArr[i].trim()) + ", ";
 	}
 	ans = ans.substring(0, ans.length() - 2);
-	ans += ")";
+	ans += ") complex";
 	return ans;
     }
     
@@ -195,7 +197,10 @@ public class Utility {
 	    transWrd = biopro (argWrd);
 	} else if (funWrd.equals("translocation") || funWrd.equals("tloc")) {
 	    transWrd = tloc (argWrd);
+	} else if (funWrd.equals("compositeAbundance") || funWrd.equals("composite")) {
+	    //TODO
 	}
+	
 	
 	return transWrd;
     }
