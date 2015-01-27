@@ -4,8 +4,9 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * @author Yu-Hsin Kuo Language Technologies Institutes, Carnegie Mellon
- *         Univeristy
+ * @author Yu-Hsin Kuo 
+ * Language Technologies Institutes, 
+ * Carnegie Mellon Univeristy
  */
 
 public class Utility {
@@ -128,6 +129,9 @@ public class Utility {
 	funMap.put("deg", new Degradation());
 	funMap.put("reaction", new Reaction());
 	funMap.put("rxn", new Reaction());
+	
+	// others
+	funMap.put("list", new Lst());
     }
 
     /*
@@ -236,7 +240,7 @@ public class Utility {
 	}
     }
 
-    class Variant implements Function {
+    class Variant implements Function { //TODO
 	public String execute(String argWrd) {
 	    return null;
 	}
@@ -252,9 +256,9 @@ public class Utility {
 	}
     }
     
-    class Location implements Function {
+    class Location implements Function { //TODO
 	public String execute (String argWrd) {
-	    return null;
+	    return "at location \"" + argWrd + "\"";
 	}
     }
 
@@ -382,31 +386,22 @@ public class Utility {
 	return "variant" + " " + argWrd.substring(argWrd.indexOf(".") + 1);
     }
 
-    public static String pmod(String argWrd) {
-	String[] strArr = argWrd.split(",");
-	if (strArr.length == 1) {
-	    return "with unspecified " + typeMap.get(strArr[0]);
-	} else if (strArr.length == 2) {
-	    String type = typeMap.get(strArr[0].trim()) == null ? typeMap
-		    .get(strArr[1].trim()) : typeMap.get(strArr[0].trim());
-	    if (typeMap.get(strArr[0].trim()) == null
-		    && codeMap.get(strArr[0].trim()) == null
-		    || typeMap.get(strArr[1].trim()) == null
-		    && codeMap.get(strArr[1].trim()) == null) {
-		return typeMap.get(strArr[0].trim()) == null ? "with " + type
-			+ " at " + strArr[0].trim() : "with " + type + " at "
-			+ strArr[1].trim();
-	    } else {
-		return "with " + type + " at an unspecified "
-			+ codeMap.get(strArr[1].trim());
+    /*
+     * oterh classes
+     */
+    
+    public class Lst implements Function {
+	public String execute(String argWrd) {
+	    String[] strArr = argWrd.split(",");
+	    String ans = "";
+	    for (int i = 0; i < strArr.length; i++) {
+		ans += parseFunc(strArr[i].trim()) + ", ";
 	    }
-	} else {
-
-	    return "with " + typeMap.get(strArr[2].trim()) + " at "
-		    + codeMap.get(strArr[1].trim()) + " " + strArr[0].trim();
+	    ans = ans.substring(0, ans.length() - 2);
+	    return ans;    
 	}
     }
-
+    
     /*
      * parse function
      */
@@ -418,7 +413,8 @@ public class Utility {
 	String funWrd = word.substring(0, pos);
 	String argWrd = word.substring(pos + 1, word.length() - 1);
 	String transWrd = "";
-
+	
+	
 	Function func = funMap.get(funWrd);
 	if (func == null)
 	    System.err.println("Error: function not found: " + funWrd);
